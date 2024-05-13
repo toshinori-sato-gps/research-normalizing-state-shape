@@ -2,10 +2,18 @@ import "./App.css"
 import { Counter } from "./features/counter/Counter"
 import { Quotes } from "./features/quotes/Quotes"
 import logo from "./logo.svg"
+import { getEvenPersons, getOddPersons } from "./features/persons/personsArraySlice"
+import { useAppSelector } from "./app/hooks"
+import { Persons } from "./features/persons/Persons"
 
 const App = () => {
+  const oddPersons = useAppSelector(getOddPersons)
+  const evenPerson = useAppSelector(getEvenPersons)
+
   return (
     <div className="App">
+      <Persons label="Odd Persons" persons={oddPersons} />
+      <Persons label="Even Persons" persons={evenPerson} />
       <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
         <Counter />
