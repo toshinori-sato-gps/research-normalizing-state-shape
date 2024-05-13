@@ -6,19 +6,33 @@ import { getEvenPersons, getOddPersons, updatePerson } from "./features/persons/
 import { useAppDispatch, useAppSelector } from "./app/hooks"
 import { Persons } from "./features/persons/Persons"
 import { useState } from "react"
+import {
+  getEvenPersonsNormalized,
+  getOddPersonsNormalized,
+  updatePersonNormalized
+} from "./features/persons/personsNormalizedSlice"
 
 const App = () => {
+  const dispatch = useAppDispatch()
+
   const oddPersons = useAppSelector(getOddPersons)
   const evenPerson = useAppSelector(getEvenPersons)
   const [nameForUpdate, setNameForUpdate] = useState("")
-  const dispatch = useAppDispatch()
+
+  const oddPersonsNormalized = useAppSelector(getOddPersonsNormalized)
+  const evenPersonNormalized = useAppSelector(getEvenPersonsNormalized)
 
   return (
     <div className="App">
       <input type="text" value={nameForUpdate} onChange={e => setNameForUpdate(e.target.value)} />
-      <button onClick={() => dispatch(updatePerson({...oddPersons[0], name: nameForUpdate}))}>Update first person</button>
+      <button onClick={() => {
+        dispatch(updatePerson({...oddPersons[0], name: nameForUpdate}))
+        dispatch(updatePersonNormalized({...oddPersons[0], name: nameForUpdate}))
+      }}>Update first person</button>
       <Persons label="Odd Persons" persons={oddPersons} />
       <Persons label="Even Persons" persons={evenPerson} />
+      <Persons label="Odd Persons normalized" persons={oddPersonsNormalized} />
+      <Persons label="Even Persons normalized" persons={evenPersonNormalized} />
       <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
         <Counter />
