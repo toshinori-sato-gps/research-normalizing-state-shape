@@ -2,7 +2,7 @@ import type { PayloadAction } from "@reduxjs/toolkit";
 import { createEntityAdapter } from "@reduxjs/toolkit"
 import type { Person } from "./persion.definitions"
 import { createAppSlice } from "../../app/createAppSlice"
-import { AppState } from "../../app/store"
+import type { AppState } from "../../app/store"
 
 export type PersonsNormalizedState = Record<Person['id'], Person>
 export const seed: PersonsNormalizedState = {
