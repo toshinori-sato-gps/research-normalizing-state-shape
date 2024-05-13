@@ -5,11 +5,10 @@ import logo from "./logo.svg"
 import { getEvenPersons, getOddPersons, updatePerson } from "./features/persons/personsArraySlice"
 import { useAppDispatch, useAppSelector } from "./app/hooks"
 import { Persons } from "./features/persons/Persons"
-import { useState } from "react"
+import { useMemo, useState } from "react"
 import {
-  getEvenPersonsNormalized,
-  getOddPersonsNormalized, selectPersonById,
-  updatePersonNormalized
+  updatePersonNormalized,
+  getPersonsNormalized,
 } from "./features/persons/personsNormalizedSlice"
 
 const evenPersonId = [2, 4];
@@ -21,9 +20,11 @@ const App = () => {
   const evenPerson = useAppSelector(getEvenPersons)
   const [nameForUpdate, setNameForUpdate] = useState("")
 
-  const oddPersonsNormalized = useAppSelector(getOddPersonsNormalized)
+  const oddPersonsNormalized = useAppSelector((state) => {
+    return getPersonsNormalized(state, 'odd');
+  })
   const evenPersonNormalized = useAppSelector((state) => {
-    return evenPersonId.map(id => selectPersonById(state, id));
+    return getPersonsNormalized(state, 'even');
   })
 
   return (
@@ -33,6 +34,10 @@ const App = () => {
         dispatch(updatePerson({...oddPersons[0], name: nameForUpdate}))
         dispatch(updatePersonNormalized({...oddPersons[0], name: nameForUpdate}))
       }}>Update first person</button>
+      <button onClick={() => {
+        dispatch(updatePerson({...evenPerson[evenPerson.length - 1], name: nameForUpdate}))
+        dispatch(updatePersonNormalized({...evenPerson[evenPerson.length - 1], name: nameForUpdate}))
+      }}>Update last person</button>
       <Persons label="Odd Persons" persons={oddPersons} />
       <Persons label="Even Persons" persons={evenPerson} />
       <Persons label="Odd Persons normalized" persons={oddPersonsNormalized} />
