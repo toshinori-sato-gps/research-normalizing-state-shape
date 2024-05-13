@@ -5,10 +5,11 @@ import React from "react"
 type Props = {
   label: string;
   persons: PersonType[];
+  shouldShowLog?: boolean;
 }
 
-export const Persons = React.memo(({label, persons }: Props) => {
-  console.log('render', label);
+export const Persons = React.memo(({label, persons, shouldShowLog }: Props) => {
+  if (shouldShowLog) console.log('render', label);
   return (
     <div>
       <h2>{label}</h2>

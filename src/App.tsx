@@ -32,7 +32,7 @@ const App = () => {
       <Persons label="Odd Persons" persons={oddPersons} />
       <Persons label="Even Persons" persons={evenPerson} />
       <Persons label="Odd Persons normalized" persons={oddPersonsNormalized} />
-      <Persons label="Even Persons normalized" persons={evenPersonNormalized} />
+      <Persons label="Even Persons normalized" persons={evenPersonNormalized} shouldShowLog={true} />
       <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
         <Counter />
