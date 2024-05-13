@@ -8,9 +8,11 @@ import { Persons } from "./features/persons/Persons"
 import { useState } from "react"
 import {
   getEvenPersonsNormalized,
-  getOddPersonsNormalized,
+  getOddPersonsNormalized, selectPersonById,
   updatePersonNormalized
 } from "./features/persons/personsNormalizedSlice"
+
+const evenPersonId = [2, 4];
 
 const App = () => {
   const dispatch = useAppDispatch()
@@ -20,7 +22,9 @@ const App = () => {
   const [nameForUpdate, setNameForUpdate] = useState("")
 
   const oddPersonsNormalized = useAppSelector(getOddPersonsNormalized)
-  const evenPersonNormalized = useAppSelector(getEvenPersonsNormalized)
+  const evenPersonNormalized = useAppSelector((state) => {
+    return evenPersonId.map(id => selectPersonById(state, id));
+  })
 
   return (
     <div className="App">
